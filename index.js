@@ -2,16 +2,28 @@ const axios = require("axios");
 const cheerio = require('cheerio');
 const moment = require('moment');
 const Telegraf = require('telegraf');
+const Extra = require('telegraf/extra');
+const Markup = require('telegraf/markup');
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
-bot.start((ctx) => ctx.reply('Welcome!'));
+const METAL = 'metal';
+const ELECTRONIC = 'electronic';
+const AMBIENT = 'ambient';
+const POST_PUNK = 'post-punk';
+
+bot.start((ctx) => {
+  return ctx.replyWithHTML('Select some music', Extra.markup(
+    Markup.keyboard([METAL, ELECTRONIC, AMBIENT, POST_PUNK])
+  ))
+});
 bot.help((ctx) => ctx.reply('Send me a sticker'));
 bot.on('sticker', (ctx) => ctx.reply('👍'));
 
-bot.hears('metal', getContent('https://www.albumoftheyear.org/genre/40-metal/2018/', 'metal'));
-bot.hears('electronic', getContent('https://www.albumoftheyear.org/genre/6-electronic/2018/', 'electronic'));
-bot.hears('ambient', getContent('https://www.albumoftheyear.org/genre/34-ambient/2018/', 'ambient'));
+bot.hears(METAL, getContent('https://www.albumoftheyear.org/genre/40-metal/2018/', METAL));
+bot.hears(ELECTRONIC, getContent('https://www.albumoftheyear.org/genre/6-electronic/2018/', ELECTRONIC));
+bot.hears(AMBIENT, getContent('https://www.albumoftheyear.org/genre/34-ambient/2018/', AMBIENT));
+bot.hears(POST_PUNK, getContent('https://www.albumoftheyear.org/genre/23-post-punk/2018/', POST_PUNK));
 
 function getContent(url, type) {
   return async (ctx) => {
