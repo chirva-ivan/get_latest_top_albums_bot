@@ -48,11 +48,11 @@ module.exports = (ctx) => {
   const sticker = 'CAADAgADvAIAAuPwEwzKSnJLsIPPdwI';
 
   switch (message) {
-    case 'start':
+    case '/start':
       return ctx.replyWithHTML('Select some music', Extra.markup(
         Markup.keyboard([METAL, ELECTRONIC, AMBIENT, POST_PUNK])
       ));
-    case 'help':
+    case '/help':
       return ctx.reply('Select some music style');
     case METAL:
       return  getContent('https://www.albumoftheyear.org/genre/40-metal/2018/', METAL)(ctx);
