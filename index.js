@@ -46,6 +46,7 @@ function getContent(url, type) {
 module.exports = (ctx) => {
   const message = ctx.update.message.text;
   const sticker = 'CAADAgADvAIAAuPwEwzKSnJLsIPPdwI';
+  const currentYear = new Date().getFullYear();
 
   switch (message) {
     case '/start':
@@ -55,13 +56,13 @@ module.exports = (ctx) => {
     case '/help':
       return ctx.reply('Select some music style');
     case METAL:
-      return  getContent('https://www.albumoftheyear.org/genre/40-metal/2018/', METAL)(ctx);
+      return  getContent(`https://www.albumoftheyear.org/genre/40-metal/${currentYear}/`, METAL)(ctx);
     case ELECTRONIC:
-      return  getContent('https://www.albumoftheyear.org/genre/6-electronic/2018/', ELECTRONIC)(ctx);
+      return  getContent(`https://www.albumoftheyear.org/genre/6-electronic/${currentYear}/`, ELECTRONIC)(ctx);
     case AMBIENT:
-      return  getContent('https://www.albumoftheyear.org/genre/34-ambient/2018/', AMBIENT)(ctx);
+      return  getContent(`https://www.albumoftheyear.org/genre/34-ambient/${currentYear}/`, AMBIENT)(ctx);
     case POST_PUNK:
-      return getContent('https://www.albumoftheyear.org/genre/23-post-punk/2018/', POST_PUNK)(ctx);
+      return getContent(`https://www.albumoftheyear.org/genre/23-post-punk/${currentYear}/`, POST_PUNK)(ctx);
     default:
       return ctx.replyWithSticker(sticker);
   }
